@@ -76,7 +76,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           REPOSITORY: notebook2rest/api
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.sha }}-${{ github.run_number }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
