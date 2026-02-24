@@ -83,7 +83,7 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-      # FOR DEPLOYING THE HELM CHART:
+    # FOR DEPLOYING THE HELM CHART: 
 
       # Switches the role to 'HelmchartDeployer'
       - name: Configure AWS credentials for EKS
