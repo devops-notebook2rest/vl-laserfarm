@@ -110,7 +110,22 @@ jobs:
           REPOSITORY: notebook2rest/api
           IMAGE_TAG: ${{ github.sha }}-${{ github.run_number }}
         run: |
-          helm upgrade --install my-api ./n2res --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
+
+            echo "Current directory:"
+            pwd
+            echo "Contents:"
+            ls -la
+
+            # Navigate to repo root (optional if not already there)
+            cd $GITHUB_WORKSPACE
+
+            # Confirm the chart folder exists
+            if [ ! -d "n2res" ]; then
+              echo "Error: n2res folder not found!"
+              exit 1
+            fi
+
+            helm upgrade --install my-api ./n2res --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
 
   # redeploy_kubernetes:
   #   runs-on: ubuntu-latest
