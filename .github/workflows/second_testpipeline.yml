@@ -45,7 +45,7 @@ jobs:
         cluster-role-arn: arn:aws:iam::259361438396:role/vl-laserfarm-cluster-role
         chart-path: n2res
         namespace: default
-        release_name: my-api
+        name: my-api
         set-values: |
           image.repository=259361438396.dkr.ecr.eu-north-1.amazonaws.com/notebook2rest/api
           image.tag=ba845f30dd926ad55cdfa5e35414e7d15f35895f-15
