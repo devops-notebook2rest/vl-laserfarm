@@ -42,7 +42,7 @@ jobs:
       with:
         aws-region: ${{ env.AWS_REGION-region }}
         cluster-name: notebook2rest_cluster
-        cluster-role-arn: arn:aws:iam::259361438396:role/vl-laserfarm-cluster-role
+        # cluster-role-arn: arn:aws:iam::259361438396:role/vl-laserfarm-cluster-role
         chart-path: n2res
         namespace: default
         name: my-api
