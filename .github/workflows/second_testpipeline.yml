@@ -1,4 +1,4 @@
-name: Testpipeline_Notebook2REST
+name: 2Testpipeline_Notebook2REST
 
 on:
   push:
