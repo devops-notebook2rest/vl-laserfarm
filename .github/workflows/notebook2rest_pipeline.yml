@@ -127,7 +127,7 @@ jobs:
 
             aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
 
-            helm upgrade --install my-api ./n2res --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
+            helm upgrade --install my-api ./n2res --namespace default --kubeconfig /home/runner/.kube/config --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
 
   # redeploy_kubernetes:
   #   runs-on: ubuntu-latest
