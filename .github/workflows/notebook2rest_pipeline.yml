@@ -92,14 +92,16 @@ jobs:
           role-to-assume: arn:aws:iam::259361438396:role/HelmchartDeployer
           aws-region: ${{ env.AWS_REGION }}
 
+      # Installs Helm (for the helm chart)
+      - name: Setup Helm
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: azure/setup-helm@v3
+        
       # Sets kubectl to point to our kubernetes cluster, so that we can control it
       - name: Configure kubeconfig
         run: |
           aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
-
-      # Installs Helm (for the helm chart)
-      - name: Setup Helm
-        uses: azure/setup-helm@v3
 
       # Deploys the Helm chart
       - name: Deploy Helm chart
@@ -108,7 +110,7 @@ jobs:
           REPOSITORY: notebook2rest/api
           IMAGE_TAG: ${{ github.sha }}-${{ github.run_number }}
         run: |
-          helm upgrade --install my-api ./helm-chart --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=${{ env.IMAGE_TAG }}
+          helm upgrade --install my-api ./helm-chart --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
 
   # redeploy_kubernetes:
   #   runs-on: ubuntu-latest
