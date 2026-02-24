@@ -110,7 +110,7 @@ jobs:
           REPOSITORY: notebook2rest/api
           IMAGE_TAG: ${{ github.sha }}-${{ github.run_number }}
         run: |
-          helm upgrade --install my-api ./helm-chart --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
+          helm upgrade --install my-api ./n2res --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
 
   # redeploy_kubernetes:
   #   runs-on: ubuntu-latest
