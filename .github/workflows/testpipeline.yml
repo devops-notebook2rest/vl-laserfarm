@@ -43,6 +43,9 @@ jobs:
         role-to-assume: arn:aws:iam::259361438396:role/HelmchartDeployer
         aws-region: ${{ env.AWS_REGION }}
 
+    - name: Debug AWS identity
+      run: aws sts get-caller-identity
+
     - name: Update kubeconfig
       run: aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
 

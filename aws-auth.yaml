@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    # This is your GitHub Actions role
+    - rolearn: arn:aws:iam::259361438396:role/HelmchartDeployer
+      username: github-actions
+      groups:
+        - system:masters
+
+
+# OM DIT TE LATEN WERKEN, DOE:
+# kubectl apply -f aws-auth.yaml
