@@ -125,6 +125,8 @@ jobs:
               exit 1
             fi
 
+            aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
+
             helm upgrade --install my-api ./n2res --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=$IMAGE_TAG
 
   # redeploy_kubernetes:
