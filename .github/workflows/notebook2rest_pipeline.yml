@@ -30,6 +30,8 @@ jobs:
 
     env:
       AWS_REGION: eu-north-1
+      EKS_CLUSTER_NAME: notebook2rest_cluster
+      # IMAGE_TAG: ${{ github.sha }}-${{ github.run_number }} # <-- GEBRUIK DEZE NOG
 
     permissions:
       id-token: write
@@ -80,6 +82,33 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      # FOR DEPLOYING THE HELM CHART:
+
+      # Switches the role to 'HelmchartDeployer'
+      - name: Configure AWS credentials for EKS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::259361438396:role/HelmchartDeployer
+          aws-region: ${{ env.AWS_REGION }}
+
+      # Sets kubectl to point to our kubernetes cluster, so that we can control it
+      - name: Configure kubeconfig
+        run: |
+          aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
+
+      # Installs Helm (for the helm chart)
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+
+      # Deploys the Helm chart
+      - name: Deploy Helm chart
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: notebook2rest/api
+          IMAGE_TAG: ${{ github.sha }}-${{ github.run_number }}
+        run: |
+          helm upgrade --install my-api ./helm-chart --namespace default --set image.repository=$REGISTRY/$REPOSITORY --set image.tag=${{ env.IMAGE_TAG }}
 
   # redeploy_kubernetes:
   #   runs-on: ubuntu-latest
