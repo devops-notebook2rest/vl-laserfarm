@@ -126,11 +126,11 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /api/notebooks
-    port: http
+    port: 8000
 readinessProbe:
   httpGet:
     path: /api/notebooks
-    port: http
+    port: 8000
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
