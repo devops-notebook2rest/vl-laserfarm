@@ -47,7 +47,6 @@ jobs:
 
       - name: Run notebook2rest
         run: |
-          cd vl-laserfarm
           python3 src/main.py ..
 
       # AWS setup
