@@ -1,14 +1,14 @@
-name: TESTING_Build_and_redeploy_with_N2R
+name: Build_and_redeploy_with_N2R
 
 on:
   push:
-    branches: [ "none" ]
+    branches: [ "main" ]
     paths:
       - '**/*.ipynb'
       - '**/*.naavrewf'
       - "n2res/**"
   pull_request:
-    branches: [ "none" ]
+    branches: [ "main" ]
     paths:
       - '**/*.ipynb'
       - '**/*.naavrewf'
@@ -41,12 +41,14 @@ jobs:
           python-version: "3.11"
 
       # Run Notebook2REST
-      # - name: Install notebook2rest
-      #   run: |
-      #     pip install git+https://github.com/Apipilikas/notebook2rest.git
-      # - name: Run notebook2rest
-      #   run: |
-      #     notebook2rest notebooks/ --out app/
+      - name: Install notebook2rest
+        run: |
+          git clone https://github.com/Apipilikas/notebook2rest.git
+
+      - name: Run notebook2rest
+        run: |
+          cd vl-laserfarm
+          python3 src/main.py ..
 
       # AWS setup
       - name: Configure AWS credentials
@@ -66,7 +68,7 @@ jobs:
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG vl-laserfarm/build
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
       # Points it to the AWS cluster
