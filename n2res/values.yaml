@@ -158,3 +158,9 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+
+tolerations:
+  - key: "eks.amazonaws.com/nodegroup"
+    operator: "Exists"
+    effect: "NoSchedule"
