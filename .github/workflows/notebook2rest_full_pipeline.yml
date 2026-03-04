@@ -44,6 +44,7 @@ jobs:
       - name: Install notebook2rest
         run: |
           git clone https://github.com/Apipilikas/notebook2rest.git
+          git checkout c755567fdf2737c30776556984163078d88f7565
 
       - name: Run notebook2rest
         run: |
