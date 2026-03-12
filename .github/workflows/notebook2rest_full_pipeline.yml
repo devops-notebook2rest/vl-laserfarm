@@ -43,7 +43,7 @@ jobs:
       # Run Notebook2REST
       - name: Install notebook2rest
         run: |
-          git clone https://github.com/Apipilikas/notebook2rest.git
+          git clone https://github.com/devops-notebook2rest/notebook2rest.git
 
       - name: Run notebook2rest
         run: |
